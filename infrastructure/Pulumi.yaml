@@ -1,0 +1,6 @@
+name: WebApi
+runtime: dotnet
+description: A minimal Azure Native C# Pulumi program
+main: MeetupPulumi.Core/MeetupPulumi.Core.csproj
+backend:
+  url: azblob://mtpshrpulctn01

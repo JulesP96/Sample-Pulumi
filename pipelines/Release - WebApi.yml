@@ -1,0 +1,14 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+trigger: none
+
+stages:
+- stage: Deploy
+  displayName: Deploy Meetup WebAPI DEV
+  jobs: 
+  - template: jobs/deploy.yml
+    parameters:
+      environment: 'MTP - WepApi'
+      azureSubscription: 'MTP - SPN'
+      stateStorage: 'mtpshrpulstg01'
+      stateContainer: 'mtpshrpulctn01'
+      stackName: 'dev'

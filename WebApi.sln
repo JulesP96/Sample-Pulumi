@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4E3B76BF-9F88-4EF3-A04A-0B3192F90FD9}"
+	ProjectSection(SolutionItems) = preProject
+		infrastructure\Pulumi.dev.yaml = infrastructure\Pulumi.dev.yaml
+		infrastructure\Pulumi.yaml = infrastructure\Pulumi.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{D5949FE2-C2BB-4080-9846-F13037513408}"
+	ProjectSection(SolutionItems) = preProject
+		pipelines\Release - WebApi.yml = pipelines\Release - WebApi.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetupPulumi.Core", "infrastructure\MeetupPulumi.Core\MeetupPulumi.Core.csproj", "{CEA77CA4-3A04-4F27-AB62-6A0A801DA016}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetupPulumi.Tests", "infrastructure\MeetupPulumi.Tests\MeetupPulumi.Tests.csproj", "{4D63F301-90E7-43A9-A0E6-DA1B90961CEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{2BDE34B1-06BD-4E4A-AE52-0B7A228DC295}"
+	ProjectSection(SolutionItems) = preProject
+		pipelines\jobs\deploy.yml = pipelines\jobs\deploy.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "src\WebApi\WebApi.csproj", "{8C9E8B9C-FFFB-40C7-8543-7BDF3217CA23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEA77CA4-3A04-4F27-AB62-6A0A801DA016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA77CA4-3A04-4F27-AB62-6A0A801DA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA77CA4-3A04-4F27-AB62-6A0A801DA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA77CA4-3A04-4F27-AB62-6A0A801DA016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D63F301-90E7-43A9-A0E6-DA1B90961CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D63F301-90E7-43A9-A0E6-DA1B90961CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D63F301-90E7-43A9-A0E6-DA1B90961CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D63F301-90E7-43A9-A0E6-DA1B90961CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C9E8B9C-FFFB-40C7-8543-7BDF3217CA23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C9E8B9C-FFFB-40C7-8543-7BDF3217CA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C9E8B9C-FFFB-40C7-8543-7BDF3217CA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C9E8B9C-FFFB-40C7-8543-7BDF3217CA23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CEA77CA4-3A04-4F27-AB62-6A0A801DA016} = {4E3B76BF-9F88-4EF3-A04A-0B3192F90FD9}
+		{4D63F301-90E7-43A9-A0E6-DA1B90961CEB} = {4E3B76BF-9F88-4EF3-A04A-0B3192F90FD9}
+		{2BDE34B1-06BD-4E4A-AE52-0B7A228DC295} = {D5949FE2-C2BB-4080-9846-F13037513408}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82C5DE0E-2FB8-49EF-A1AA-4237FF1C36CE}
+	EndGlobalSection
+EndGlobal

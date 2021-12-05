@@ -1,0 +1,72 @@
+parameters:
+  environment:
+  azureSubscription:
+  stateStorage:
+  stateContainer:
+  stackName:
+
+jobs:
+  - deployment: Deploy_Infrastructure
+    environment: ${{ parameters.environment }}
+    pool:
+      vmImage: "ubuntu-latest"
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+
+            - task: AzureCLI@2
+              displayName: Get Storage Account Key
+              name: GetStorageKey
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  KEY=$(az storage account keys list -n ${{ parameters.stateStorage }} --query "[0].value" -o=tsv)
+                  echo "##vso[task.setvariable variable=STORAGE_KEY;issecret=true]$KEY"
+
+            - task: Pulumi@1
+              name: PulumiPreview
+              condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
+              env:
+                AZURE_STORAGE_KEY: $(STORAGE_KEY) 
+                AZURE_STORAGE_ACCOUNT: ${{ parameters.stateStorage }}
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                command: preview
+                loginArgs: --cloud-url azblob://${{ parameters.stateContainer }}
+                args: --non-interactive --diff --suppress-permalink=true
+                cwd: "infrastructure/"
+                stack: ${{ parameters.stackName }}
+
+            - task: Pulumi@1
+              name: PulumiUp
+              condition: or(eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'UserCreated'))
+              env:
+                AZURE_STORAGE_KEY: $(STORAGE_KEY) 
+                AZURE_STORAGE_ACCOUNT: ${{ parameters.stateStorage }}
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                command: up 
+                loginArgs: --cloud-url azblob://${{ parameters.stateContainer }}
+                args: --non-interactive --yes --suppress-permalink=true
+                cwd: "infrastructure/"
+                stack: ${{ parameters.stackName }}
+
+            - task: AzureCLI@2
+              displayName: 'Set stackName outputs as variables'
+              name: Pulumi 
+              env:
+                AZURE_STORAGE_KEY: $(STORAGE_KEY) 
+                AZURE_STORAGE_ACCOUNT: ${{ parameters.stateStorage }}
+                AZURE_KEYVAULT_AUTH_VIA_CLI: "true"
+              inputs:
+                azureSubscription: ${{ parameters.azureSubscription }}
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  echo "##vso[task.setvariable variable=clusterFqdn;isOutput=true]$(pulumi stackName output ClusterFQDN)"
+                workingDirectory: "infrastructure/"
