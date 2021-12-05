@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using MeetupPulumi.Core.Extensions;
+using MeetupPulumi.Core.Modules;
 using Pulumi;
 using Pulumi.AzureNative.Resources;
 
 namespace MeetupPulumi.Core
 {
-    class StackCore : StackBase
+    public class StackCore : StackBase
     {
         public ResourceGroup ResourceGroup { get; private set; }
         public Config Configuration { get; private set; }
@@ -31,7 +32,14 @@ namespace MeetupPulumi.Core
             });
 
             // Create resources
+            var appPlanModule = new AppPlanModule(this);
 
+            this.ApiName = appPlanModule.ApiName;
         }
+
+        [Output]
+        public Output<string> ApiName { get; set; }
+
+
     }
 }
